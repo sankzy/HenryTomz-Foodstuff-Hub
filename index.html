@@ -176,7 +176,18 @@
   .swatch-orbit.s4{width:160px;height:160px; top:56%; left:46%; background:radial-gradient(circle at 30% 28%, #F7F1E1, #EDE6D2 55%, #D8CBA0 100%);}
   .swatch-orbit.s5{width:96px;height:96px; top:30%; left:74%; background:radial-gradient(circle at 33% 30%, #E8CB94, #C48A4D 60%, #9C6B34 100%);}
 
-  .trust-strip{
+  @media (max-width: 860px){
+    .hero-grid{grid-template-columns:1fr; gap:36px;}
+    .hero{padding:56px 0 44px; text-align:center;}
+    .hero .lede{margin-inline:auto;}
+    .hero-ctas{justify-content:center;}
+    .hero-visual{height:260px; max-width:340px; margin:0 auto;}
+  }
+  @media (max-width: 480px){
+    .hero-visual{height:220px; max-width:280px;}
+    .hero-ctas{flex-direction:column; align-items:stretch;}
+    .hero-ctas .btn{justify-content:center;}
+  }
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     background:var(--cream-dark);
   }
@@ -197,6 +208,11 @@
   .section-head{max-width:640px; margin-bottom:44px;}
   .section-head h2{font-size:clamp(1.8rem, 3vw, 2.5rem); margin-top:10px;}
   .section-head p{color:var(--ink-soft); margin-top:14px; font-size:1.03rem;}
+
+  @media (max-width: 560px){
+    section{padding:56px 0;}
+    .market-inner{padding:44px 16px 52px;}
+  }
 
   /* ---------- Market board ---------- */
   .market{background:var(--maroon); color:var(--paper); border-radius:28px; margin:0 16px; }
@@ -848,24 +864,66 @@ const basket = {}; // id -> qty
    already in PRODUCTS above if the sheet URL is blank, unreachable,
    or a row doesn't match — the site always keeps working either way.
    --------------------------------------------------------------------- */
+// Google Drive "uc?export=view&id=..." and "/file/d/<id>/view" links often
+// fail to render in a plain <img> tag (Drive returns an HTML interstitial
+// instead of the raw image). This rewrites any such link into the
+// lh3.googleusercontent.com form, which hotlinks reliably. Non-Drive URLs
+// (e.g. Imgur, your own CDN) are returned unchanged.
+function normalizeImageUrl(url){
+  if (!url) return url;
+  let id = null;
+  let m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m) id = m[1];
+  if (!id){
+    m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (m) id = m[1];
+  }
+  if (id) return `https://lh3.googleusercontent.com/d/${id}=w1000`;
+  return url;
+}
+
 function parsePriceCSV(text){
+  // More flexible CSV parser: reads header row and supports additional
+  // columns (id, price, local, name, unit, c1, c2, img). Returns an
+  // object keyed by id with parsed fields. Falls back to empty object
+  // for malformed input.
   const lines = text.trim().split(/\r?\n/);
   if (lines.length < 2) return {};
-  // Find which columns are "id" and "price" from the header row, so
-  // column order in the sheet doesn't matter.
+
+  // Parse header and map columns to keys
   const header = lines[0].split(',').map(h => h.trim().toLowerCase());
-  const idCol = header.indexOf('id');
-  const priceCol = header.indexOf('price');
+  const colIndex = (key) => header.indexOf(key);
+  const idCol = colIndex('id');
+  const priceCol = colIndex('price');
   if (idCol === -1 || priceCol === -1) return {};
 
   const updates = {};
   for (let i = 1; i < lines.length; i++){
+    if (!lines[i].trim()) continue;
     const cols = lines[i].split(',').map(c => c.trim());
     const id = (cols[idCol] || '').toLowerCase();
-    const price = parseFloat((cols[priceCol] || '').replace(/[^\d.]/g, ''));
-    if (id && !isNaN(price) && price > 0){
-      updates[id] = Math.round(price);
-    }
+    if (!id) continue;
+    const priceRaw = (cols[priceCol] || '').replace(/[^\d.]/g, '');
+    const price = priceRaw === '' ? NaN : parseFloat(priceRaw);
+
+    const entry = {};
+    if (!isNaN(price) && price > 0) entry.price = Math.round(price);
+    // optional columns
+    const localCol = colIndex('local');
+    const nameCol = colIndex('name');
+    const unitCol = colIndex('unit');
+    const c1Col = colIndex('c1');
+    const c2Col = colIndex('c2');
+    const imgCol = colIndex('img');
+
+    if (localCol !== -1) entry.local = cols[localCol] || undefined;
+    if (nameCol !== -1)  entry.name  = cols[nameCol]  || undefined;
+    if (unitCol !== -1)  entry.unit  = cols[unitCol]  || undefined;
+    if (c1Col !== -1)    entry.c1    = cols[c1Col]    || undefined;
+    if (c2Col !== -1)    entry.c2    = cols[c2Col]    || undefined;
+    if (imgCol !== -1)   entry.img   = normalizeImageUrl(cols[imgCol]) || undefined;
+
+    updates[id] = entry;
   }
   return updates;
 }
@@ -877,17 +935,39 @@ async function syncLivePrices(){
     if (!res.ok) throw new Error('Sheet fetch failed: ' + res.status);
     const csvText = await res.text();
     const updates = parsePriceCSV(csvText);
+    console.info('Live price sync — parsed updates:', updates);
 
     let changed = false;
-    PRODUCTS.forEach(p => {
-      if (updates.hasOwnProperty(p.id) && updates[p.id] !== p.price){
-        p.price = updates[p.id];
+    // Apply updates: update existing products or create new ones when
+    // the sheet includes an id not found in PRODUCTS.
+    for (const [id, data] of Object.entries(updates)){
+      console.debug('processing sheet row id=', id, 'data=', data);
+      const p = PRODUCTS.find(x => x.id === id);
+      if (p){
+        if (data.hasOwnProperty('price') && data.price !== p.price){ p.price = data.price; changed = true; }
+        ['local','name','unit','c1','c2','img'].forEach(k => {
+          if (data[k] && data[k] !== p[k]){ p[k] = data[k]; changed = true; }
+        });
+      } else {
+        console.info('Adding new product from sheet:', id, data);
+        // create a minimal product entry from available sheet columns
+        const newP = {
+          id: id,
+          local: (data.local || id),
+          name: (data.name || id.charAt(0).toUpperCase() + id.slice(1)),
+          unit: (data.unit || 'mudu'),
+          price: (data.price || 0),
+          c1: (data.c1 || '#E9C468'),
+          c2: (data.c2 || '#B9821E'),
+          img: (data.img || '')
+        };
+        PRODUCTS.push(newP);
         changed = true;
       }
-    });
+    }
 
     if (changed){
-      renderBoard();      // redraw prices on the shop board
+      renderBoard();      // redraw prices and any newly added products
       renderBasket();     // redraw basket total in case prices changed
     }
   } catch (err) {
