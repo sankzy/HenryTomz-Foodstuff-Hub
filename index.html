@@ -296,6 +296,13 @@
     box-shadow:var(--shadow);
   }
   .basket-panel h3{font-size:1.2rem;}
+  .basket-head{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .clear-btn{
+    background:none; border:none; color:var(--russet); font-family:'Space Mono', monospace;
+    font-size:0.76rem; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer;
+    padding:4px 2px; text-decoration:underline; text-underline-offset:3px;
+  }
+  .clear-btn:hover{color:var(--maroon);}
   .basket-sub{font-size:0.82rem; color:var(--ink-soft); margin-top:4px;}
   .basket-list{margin:18px 0; display:flex; flex-direction:column; gap:10px; max-height:260px; overflow-y:auto;}
   .basket-empty{font-size:0.9rem; color:var(--ink-soft); font-style:italic;}
@@ -590,7 +597,10 @@
           <div class="board-grid" id="boardGrid"><!-- injected by JS --></div>
 
           <aside class="basket-panel">
-            <h3>Your Order</h3>
+            <div class="basket-head">
+              <h3>Your Order</h3>
+              <button class="clear-btn" id="clearBasketBtn" type="button" hidden>Clear</button>
+            </div>
             <p class="basket-sub">Nothing leaves the market until you confirm on WhatsApp.</p>
             <div class="basket-list" id="basketList">
               <p class="basket-empty">Your basket is empty — tap "Add" on any item.</p>
@@ -603,7 +613,7 @@
               <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm5.7 14.3c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.5.3.6.9 2.1 1 2.3.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.5.5-.2.2-.4.4-.2.8.2.4 1 1.6 2.1 2.6 1.4 1.3 2.6 1.7 3 1.9.3.2.5.1.7-.1.2-.2.9-1 1.1-1.4.2-.3.4-.3.7-.2.3.1 1.8.9 2.1 1 .3.2.5.2.6.4.1.2.1.9-.1 1.5z"/></svg>
               Send Order via WhatsApp
             </button>
-            <p class="basket-note">Business note: connect your real WhatsApp number and daily prices in the code — see the comment block at the top of the file.</p>
+            <p class="basket-note">Prices may vary slightly by market day — we'll confirm before packing. Thank you for your patronage.</p>
           </aside>
         </div>
       </div>
@@ -1051,14 +1061,26 @@ function addToBasket(id){
   renderBasket();
 }
 
+function clearBasket(){
+  Object.keys(basket).forEach(id => delete basket[id]);
+  PRODUCTS.forEach(p => {
+    const el = document.getElementById(`qty-${p.id}`);
+    if(el) el.textContent = '0';
+  });
+  renderBasket();
+}
+document.getElementById('clearBasketBtn').addEventListener('click', clearBasket);
+
 function renderBasket(){
   const list = document.getElementById('basketList');
   const totalEl = document.getElementById('basketTotal');
   const waBtn = document.getElementById('waButton');
   const mobileCount = document.getElementById('mobileBasketCount');
+  const clearBtn = document.getElementById('clearBasketBtn');
 
   const entries = Object.entries(basket).filter(([,qty]) => qty > 0);
   mobileCount.textContent = entries.reduce((s,[,q]) => s+q, 0);
+  clearBtn.hidden = entries.length === 0;
 
   if(entries.length === 0){
     list.innerHTML = '<p class="basket-empty">Your basket is empty — tap "Add" on any item.</p>';
