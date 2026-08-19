@@ -167,7 +167,7 @@
   .btn svg{width:18px; height:18px;}
 
   .hero-visual{
-    position:relative; height:380px;
+    position:relative; width:100%; max-width:460px; aspect-ratio:1/1; margin:0 auto;
   }
   .orbit-spin{
     position:absolute; inset:0;
@@ -182,22 +182,21 @@
     .orbit-spin{ animation:none; }
   }
   .swatch-orbit{position:absolute; border-radius:50%; box-shadow:var(--shadow);}
-  .swatch-orbit.s1{width:170px;height:170px; top:2%; left:2%; background:radial-gradient(circle at 32% 28%, #E9C468, var(--gold) 60%, #B9821E 100%);}
-  .swatch-orbit.s2{width:110px;height:110px; top:60%; left:0%; background:radial-gradient(circle at 30% 30%, #C25A32, var(--russet) 60%, var(--russet-dark) 100%);}
-  .swatch-orbit.s3{width:100px;height:100px; top:0%; left:64%; background:radial-gradient(circle at 35% 30%, #7A2C3E, var(--maroon) 65%, var(--maroon-dark) 100%);}
-  .swatch-orbit.s4{width:140px;height:140px; top:58%; left:56%; background:radial-gradient(circle at 30% 28%, #F7F1E1, #EDE6D2 55%, #D8CBA0 100%);}
-  .swatch-orbit.s5{width:76px;height:76px; top:28%; left:86%; background:radial-gradient(circle at 33% 30%, #E8CB94, #C48A4D 60%, #9C6B34 100%);}
+  .swatch-orbit.s1{width:34%; height:34%; top:10%; left:8%; background:radial-gradient(circle at 32% 28%, #E9C468, var(--gold) 60%, #B9821E 100%);}
+  .swatch-orbit.s2{width:18%; height:18%; top:56%; left:4%; background:radial-gradient(circle at 30% 30%, #C25A32, var(--russet) 60%, var(--russet-dark) 100%);}
+  .swatch-orbit.s3{width:20%; height:20%; top:14%; left:60%; background:radial-gradient(circle at 35% 30%, #7A2C3E, var(--maroon) 65%, var(--maroon-dark) 100%);}
+  .swatch-orbit.s4{width:24%; height:24%; top:56%; left:46%; background:radial-gradient(circle at 30% 28%, #F7F1E1, #EDE6D2 55%, #D8CBA0 100%);}
+  .swatch-orbit.s5{width:13%; height:13%; top:38%; left:76%; background:radial-gradient(circle at 33% 30%, #E8CB94, #C48A4D 60%, #9C6B34 100%);}
 
   @media (max-width: 860px){
     .hero-grid{grid-template-columns:1fr; gap:36px;}
     .hero{padding:56px 0 44px; text-align:center;}
     .hero .lede{margin-inline:auto;}
     .hero-ctas{justify-content:center;}
-    .hero-visual{height:260px; max-width:340px; margin:0 auto;}
+    .hero-visual{max-width:320px;}
   }
   @media (max-width: 480px){
-    .hero-visual{height:220px; max-width:280px;}
-    .orbit-spin{transform-origin:50% 50%; scale:0.72;}
+    .hero-visual{max-width:240px;}
     .hero-ctas{flex-direction:column; align-items:stretch;}
     .hero-ctas .btn{justify-content:center;}
   }
