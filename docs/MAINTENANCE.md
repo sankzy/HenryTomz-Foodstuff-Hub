@@ -49,40 +49,38 @@ local,name,unit,c1,c2,img
 - `name`: customer-facing English name
 - `unit`: selling unit, such as `mudu`, `derica`, `kg`, or `each`
 - `c1` and `c2`: fallback gradient colors in CSS hex format
-- `img`: image URL; Google Drive file URLs are normalized automatically
+- `img`: image URL starting with `https://` (Google Drive file URLs are normalized automatically) or a file path such as `images/products/rice.webp`; anything else is ignored
 
 Keep the sheet simple. The built-in parser is intentionally small and does not handle commas inside quoted CSV values.
 
 ## When To Edit The HTML
 
-Edit [`index.html`](../index.html) when changing:
+Edit [`index.html`](../index.html) (page text and contact details), [`styles.css`](../styles.css) (look and layout) or [`app.js`](../app.js) (products, prices and ordering) when changing:
 
 - Brand name, story, testimonials, delivery locations, or page copy
 - Fallback catalog entries
 - Phone numbers, WhatsApp links, email, address, or opening hours
 - The live pricing sheet URL or refresh interval
-- Embedded product or gallery images
+- Product or gallery images (replace the files in `images/products/` or `images/gallery/`, keeping the same file names)
 - Layout, accessibility, responsive behavior, or animations
 
-The customization instructions are also included beside the JavaScript configuration in the file.
+The customization instructions are also included beside the configuration at the top of `app.js`.
 
 ### Changing The Primary WhatsApp Number
 
 The primary number is currently `2348131327023` in international format and `0813 132 7023` in display format.
 
-Search the entire file for both forms before publishing. Update:
+Change `WHATSAPP_NUMBER` at the top of `app.js`. It drives the basket order button and every WhatsApp link marked `data-wa`. Then search `index.html` for both forms of the number and update:
 
-- The hero WhatsApp link
-- The CTA banner WhatsApp link
-- The footer WhatsApp link
-- The `buildWhatsAppLink()` function
-- The visible phone text, if the display number changes
+- The `href` of the three `data-wa` links (used if JavaScript is off)
+- The `tel:` links and visible phone text in the footer
+- `telephone` in the structured data in the page head
 
 Afterward, place a test order from the basket and confirm that WhatsApp opens the correct recipient.
 
 ### Changing Fallback Prices
 
-Find the `PRODUCTS` array near the bottom of the file and update the relevant `price` and `unit` fields. Keep each `id` stable when possible, because the live sheet and basket use that ID to identify the product.
+Find the `PRODUCTS` array near the top of `app.js` and update the relevant `price` and `unit` fields. Keep each `id` stable when possible, because the live sheet and basket use that ID to identify the product.
 
 A product entry follows this shape:
 
@@ -95,7 +93,7 @@ A product entry follows this shape:
   price: 1200,
   c1: '#E9C468',
   c2: '#B9821E',
-  img: '...'
+  img: 'images/products/millet.webp'
 }
 ```
 
@@ -149,7 +147,7 @@ Confirm that:
 
 ### Images Or Fonts Are Missing
 
-Product and gallery images are embedded in the HTML. If an image supplied by the live sheet is external, confirm that its URL is publicly reachable and can be used in an `<img>` element. Google Fonts require network access; the page falls back to generic families when they are unavailable.
+Product and gallery images are files in the `images/` folder. If an image supplied by the live sheet is external (it must start with `https://`), confirm that its URL is publicly reachable and can be used in an `<img>` element. Google Fonts require network access; the page falls back to generic families when they are unavailable.
 
 ## Security And Content Hygiene
 

@@ -5,7 +5,7 @@ A lightweight, single-page storefront for HenryTomz Foodstuff Hub in Gonin Gora,
 ## At A Glance
 
 - **Application type:** Static HTML storefront
-- **Entry point:** [`index.html`](index.html)
+- **Entry point:** [`index.html`](index.html), with [`styles.css`](styles.css), [`app.js`](app.js) and an `images/` folder
 - **Runtime:** A modern web browser with JavaScript enabled
 - **Build system:** None
 - **Backend:** None
@@ -22,7 +22,7 @@ The page includes:
 - Responsive navigation with mobile menu support
 - Hero section with direct WhatsApp contact
 - Market board with product cards, quantity controls, and estimated prices
-- In-memory basket with total calculation
+- In-memory basket with total calculation and a remove button on every line
 - WhatsApp order message generation
 - Delivery coverage for Kaduna and nationwide bulk shipping
 - About section with an automatic product and shop photo gallery
@@ -66,17 +66,25 @@ Stop the server with `Ctrl+C`.
 
 ```text
 Grains/
-├── index.html              # Complete storefront: markup, styles, assets, and JavaScript
+├── index.html              # Page markup, meta tags and structured data
+├── styles.css              # All styles
+├── app.js                  # Products, live prices, basket and WhatsApp order link
+├── images/
+│   ├── products/           # One photo per product on the market board
+│   ├── gallery/            # Photos in the About section slideshow
+│   ├── og-image.jpg        # 1200x630 preview shown when the link is shared
+│   └── favicon-*.png, apple-touch-icon.png
+├── .prettierrc.json        # Formatting rules
 ├── README.md               # Project overview and developer documentation
 └── docs/
     └── MAINTENANCE.md      # Business-owner and maintainer runbook
 ```
 
-All styles, scripts, icons, favicons, product images, and gallery images are currently embedded in [`index.html`](index.html). There are no local asset directories.
+Images are separate files so the page can render before they download, and the browser can cache them. Product and gallery photos are WebP, 340-380 px wide.
 
 ## Catalog And Fallback Prices
 
-The fallback catalog is defined in the `PRODUCTS` array near the bottom of [`index.html`](index.html). These values are used immediately on page load and remain available if the live price sheet cannot be reached.
+The fallback catalog is defined in the `PRODUCTS` array near the top of [`app.js`](app.js). These values are used immediately on page load and remain available if the live price sheet cannot be reached.
 
 | ID | Product | Local name | Unit | Fallback price |
 | --- | --- | --- | --- | ---: |
@@ -97,7 +105,7 @@ Prices, stock, delivery fees, and final totals are not guaranteed by the fronten
 
 ## Live Pricing
 
-Live pricing is enabled through `LIVE_PRICE_SHEET_URL` in [`index.html`](index.html). The page fetches the published CSV immediately on load and then every five minutes while the page remains open.
+Live pricing is enabled through `LIVE_PRICE_SHEET_URL` in [`app.js`](app.js). The page fetches the published CSV immediately on load and then every five minutes while the page remains open.
 
 The CSV must include these required columns:
 
@@ -130,7 +138,7 @@ The current customer-facing contact details are:
 - Address: Gonin Gora, Kaduna, Kaduna State, Nigeria
 - Hours: Monday to Saturday, 7:00am to 6:00pm
 
-The primary WhatsApp number appears in several links and in the JavaScript order-link builder. When changing it, update every occurrence and test both the hero link and the basket order button.
+The primary WhatsApp number is set once, as `WHATSAPP_NUMBER` in [`app.js`](app.js). The basket order button and every `wa.me` link marked `data-wa` in `index.html` use it. The two `tel:` links in the footer and the visible phone text are plain HTML, and so are the number in the structured data (`telephone`) and the `wa.me` fallback `href`s, so search for `2348131327023` and `0813 132 7023` when you change it, then test the hero link and the basket order button.
 
 ## Deployment
 
@@ -138,7 +146,7 @@ This project works with static hosting providers such as GitHub Pages, Netlify, 
 
 Deployment requirements:
 
-- Publish [`index.html`](index.html) at the site root.
+- Publish `index.html`, `styles.css`, `app.js` and the `images/` folder together at the site root.
 - Ensure JavaScript is served without modification.
 - Use HTTPS in production so external fonts, Google Sheets, and WhatsApp links work consistently.
 - Confirm that the published Google Sheet remains publicly accessible as CSV.
@@ -152,7 +160,8 @@ Before publishing a change:
 
 - Open the page on desktop and mobile widths.
 - Confirm that all product cards render and prices are readable.
-- Add several products, verify quantities and the estimated total, then clear the basket.
+- Add several products, verify quantities and the estimated total, remove one item, then clear the basket.
+- Paste the site link into a WhatsApp chat and confirm the preview image and title appear.
 - Confirm that the WhatsApp button is disabled when the basket is empty.
 - Place a test order and verify the recipient number and generated message.
 - Confirm the Google Sheet CSV loads and that a changed price appears after refresh.
@@ -168,9 +177,17 @@ Before publishing a change:
 - The frontend does not create a server-side order record.
 - The live-price parser supports simple comma-separated rows and does not support quoted CSV fields containing commas.
 - Live pricing depends on network access, a correctly published sheet, and browser CORS behavior.
-- The large embedded Base64 images make the HTML file heavier than a typical static page.
-- Values supplied by the live sheet are inserted into generated markup; only trusted sheet editors should be allowed to change the published sheet.
+- Values from the live sheet are cleaned before use (ids, text length, hex colours, and `https:` or local image paths only) and escaped when drawn, but only trusted people should have edit access to the published sheet.
+- A sheet row for a product that is not in `PRODUCTS` is ignored unless it has a valid price.
 
 ## License And Ownership
 
-No license file is currently included. Treat the page, brand content, embedded images, and customer-facing copy as proprietary project material unless the project owner explicitly states otherwise.
+No license file is currently included. Treat the page, brand content, images, and customer-facing copy as proprietary project material unless the project owner explicitly states otherwise.
+
+## Formatting
+
+Run Prettier before committing. It needs no project install:
+
+```bash
+npx prettier --write index.html styles.css app.js
+```
