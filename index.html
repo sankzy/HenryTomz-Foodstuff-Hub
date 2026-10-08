@@ -1,337 +1,539 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HenryTomz Foodstuff Hub — Kaduna</title>
-<meta name="description" content="Fresh grains, legumes, spices and raw foods sourced from Kaduna's markets. Same-day delivery in Kaduna State, nationwide shipping across Nigeria.">
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,400..600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HenryTomz Foodstuff Hub — Kaduna</title>
+    <meta
+      name="description"
+      content="Fresh grains, legumes, spices and raw foods sourced from Kaduna's markets. Same-day delivery in Kaduna State, nationwide shipping across Nigeria."
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,400..600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ============ HEADER ============ -->
+    <header>
+      <div class="nav wrap">
+        <a href="#top" class="brand" aria-label="HenryTomz Foodstuff Hub home">
+          <svg
+            class="brand-mark"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="24" cy="24" r="21" fill="#FBF7EE" stroke="#1F4E8C" stroke-width="3" />
+            <circle cx="24" cy="24" r="14" fill="none" stroke="#1F8A4C" stroke-width="2.5" />
+            <text
+              x="24"
+              y="30"
+              font-family="Georgia, serif"
+              font-weight="700"
+              font-size="16"
+              fill="#1F4E8C"
+              text-anchor="middle"
+            >
+              HT
+            </text>
+          </svg>
+          <span class="brand-name">HenryTomz<span class="sub">Foodstuff Hub</span></span>
+        </a>
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" id="menuToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+          </svg>
+        </button>
+        <nav class="nav-links" id="navLinks">
+          <a href="#market">Market Board</a>
+          <a href="#how">How It Works</a>
+          <a href="#delivery">Delivery</a>
+          <a href="#about">Our Story</a>
+          <a href="#contact">Contact</a>
+          <a href="#market" class="nav-cta" style="display: inline-block">Order Now</a>
+        </nav>
+      </div>
+    </header>
 
-<!-- ============ HEADER ============ -->
-<header>
-  <div class="nav wrap">
-    <a href="#top" class="brand" aria-label="HenryTomz Foodstuff Hub home">
-      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="24" cy="24" r="21" fill="#FBF7EE" stroke="#1F4E8C" stroke-width="3"/>
-        <circle cx="24" cy="24" r="14" fill="none" stroke="#1F8A4C" stroke-width="2.5"/>
-        <text x="24" y="30" font-family="Georgia, serif" font-weight="700" font-size="16" fill="#1F4E8C" text-anchor="middle">HT</text>
-      </svg>
-      <span class="brand-name">HenryTomz<span class="sub">Foodstuff Hub</span></span>
-    </a>
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" id="menuToggle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="eyebrow">Gonin Gora · Kaduna, Nigeria</p>
+            <h1>Every grain, <em>measured right,</em><br />every single time.</h1>
+            <p class="lede">
+              We source millet, guinea corn, beans, rice, spices and raw foodstuff straight from
+              Kaduna's markets — sorted, cleaned, and freshly milled to order. Wholesale, retail and
+              home delivery. Delivered across Kaduna State, shipped anywhere in Nigeria.
+            </p>
+            <div class="hero-ctas">
+              <a href="#market" class="btn btn-primary">
+                Browse Today's Stock
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+              <a
+                href="https://wa.me/2348131327023?text=Hello%20HenryTomz%20Foodstuff%20Hub%2C%20I%27d%20like%20to%20place%20an%20order."
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orbit-spin">
+              <div class="swatch-orbit s1"></div>
+              <div class="swatch-orbit s2"></div>
+              <div class="swatch-orbit s3"></div>
+              <div class="swatch-orbit s4"></div>
+              <div class="swatch-orbit s5"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="trust-strip">
+        <div class="wrap">
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z" />
+            </svg>
+            Sourced weekly from Kaduna's markets
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Cleaned &amp; sorted before packing
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="7" width="18" height="13" rx="2" />
+              <path d="M8 7V5a4 4 0 018 0v2" stroke-linecap="round" />
+            </svg>
+            Sold by mudu, derica &amp; kg — retail or bulk
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" />
+            </svg>
+            Kaduna-wide &amp; nationwide delivery
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ MARKET BOARD ============ -->
+      <section id="market">
+        <div class="market">
+          <div class="market-inner">
+            <div class="section-head">
+              <p class="eyebrow">Updated every market day</p>
+              <h2>Today's Market Board</h2>
+              <p>
+                Tap the items you want, set your quantity, then send your order straight to us on
+                WhatsApp. Prices shown are per unit — final total is confirmed before we pack.
+              </p>
+            </div>
+
+            <div class="board-layout">
+              <div class="board-grid" id="boardGrid"><!-- injected by JS --></div>
+
+              <aside class="basket-panel">
+                <div class="basket-head">
+                  <h3>Your Order</h3>
+                  <button class="clear-btn" id="clearBasketBtn" type="button" hidden>Clear</button>
+                </div>
+                <p class="basket-sub">Nothing leaves the market until you confirm on WhatsApp.</p>
+                <div class="basket-list" id="basketList">
+                  <p class="basket-empty">Your basket is empty — tap "Add" on any item.</p>
+                </div>
+                <div class="basket-total">
+                  <span>Estimated total</span>
+                  <span id="basketTotal">₦0</span>
+                </div>
+                <button class="wa-btn" id="waButton" disabled>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path
+                      d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm5.7 14.3c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.5.3.6.9 2.1 1 2.3.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.5.5-.2.2-.4.4-.2.8.2.4 1 1.6 2.1 2.6 1.4 1.3 2.6 1.7 3 1.9.3.2.5.1.7-.1.2-.2.9-1 1.1-1.4.2-.3.4-.3.7-.2.3.1 1.8.9 2.1 1 .3.2.5.2.6.4.1.2.1.9-.1 1.5z"
+                    />
+                  </svg>
+                  Send Order via WhatsApp
+                </button>
+                <p class="basket-note">
+                  Prices may vary slightly by market day — we'll confirm before packing. Thank you
+                  for your patronage.
+                </p>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HOW IT WORKS ============ -->
+      <section id="how">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Three steps, no stress</p>
+            <h2>From market board to your door</h2>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <span class="num">01</span>
+              <h3>Fill your basket</h3>
+              <p>
+                Tap through today's board and set quantities in mudu, derica or kg — mix grains,
+                legumes and spices in one order.
+              </p>
+            </div>
+            <div class="step">
+              <span class="num">02</span>
+              <h3>Confirm on WhatsApp</h3>
+              <p>
+                Your order list is sent straight to our line. We confirm final price, stock and your
+                delivery address in minutes.
+              </p>
+            </div>
+            <div class="step">
+              <span class="num">03</span>
+              <h3>We pack &amp; move it</h3>
+              <p>
+                Pickup at Gonin Gora, same-day delivery around Kaduna, or nationwide courier for
+                orders outside the state.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DELIVERY ============ -->
+      <section id="delivery" class="delivery">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Coverage</p>
+            <h2>Kaduna first. Nigeria too.</h2>
+          </div>
+          <div class="delivery-grid">
+            <div class="delivery-card">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 21s-7-6.5-7-11a7 7 0 0114 0c0 4.5-7 11-7 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                Within Kaduna State
+              </h3>
+              <p>
+                Same-day and next-day delivery on retail orders — riders move daily around the metro
+                and nearby towns.
+              </p>
+              <div class="tag-list">
+                <span class="tag">Gonin Gora</span>
+                <span class="tag">Kaduna Metro</span>
+                <span class="tag">Sabon Gari</span>
+                <span class="tag">Zaria</span>
+                <span class="tag">Kafanchan</span>
+                <span class="tag">Kagoro</span>
+                <span class="tag">Pambeguwa</span>
+              </div>
+            </div>
+            <div class="delivery-card">
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="7" width="15" height="10" rx="1.5" />
+                  <path d="M16 10h3l3 3v4h-6z" />
+                  <circle cx="6" cy="19" r="1.8" />
+                  <circle cx="17.5" cy="19" r="1.8" />
+                </svg>
+                Anywhere in Nigeria
+              </h3>
+              <p>
+                Bulk and wholesale orders travel by trusted logistics partners to Lagos, Abuja, Port
+                Harcourt and beyond — ideal for caterers, shops and family stock-ups. 2–5 working
+                days, tracked.
+              </p>
+              <div class="tag-list">
+                <span class="tag">Bulk sacks</span>
+                <span class="tag">Diaspora orders</span>
+                <span class="tag">Caterers &amp; shops</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about">
+        <div class="wrap about-grid">
+          <div class="about-visual">
+            <!-- Gallery of shop/product photos, all 13 supplied images, with a repeating watermark overlay. -->
+            <div class="about-gallery" id="aboutGallery">
+              <img
+                src="images/gallery/millet-varieties.webp"
+                alt="Millet varieties at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/guinea-corn.webp"
+                alt="Guinea corn at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/maize.webp"
+                alt="Maize at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/maize-grits.webp"
+                alt="Maize & grits at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/local-rice.webp"
+                alt="Local rice at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/brown-beans.webp"
+                alt="Brown beans at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/groundnut.webp"
+                alt="Groundnut at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/soybean.webp"
+                alt="Soybean at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/dried-pepper.webp"
+                alt="Dried pepper at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/crayfish.webp"
+                alt="Crayfish at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/melon-seed.webp"
+                alt="Melon seed at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/dried-ginger.webp"
+                alt="Dried ginger at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+              <img
+                src="images/gallery/yam-tubers.webp"
+                alt="Yam tubers at HenryTomz Foodstuff Hub"
+                loading="lazy"
+              />
+            </div>
+            <div class="about-watermark" aria-hidden="true">
+              <span class="wm-line">HenryTomz Foodstuff Hub</span>
+              <span class="wm-line">HenryTomz Foodstuff Hub</span>
+              <span class="wm-line">HenryTomz Foodstuff Hub</span>
+              <span class="wm-line">HenryTomz Foodstuff Hub</span>
+              <span class="wm-line">HenryTomz Foodstuff Hub</span>
+            </div>
+          </div>
+          <div class="about-copy">
+            <p class="eyebrow">Our Story</p>
+            <h2>One stop for your kitchen and your wallet.</h2>
+            <p>
+              HenryTomz Foodstuff Hub started in Gonin Gora, Kaduna — weighing out millet and beans
+              by the mudu for neighbours who wanted honest measure and clean produce. That's still
+              the standard: every bag is sorted by hand, every scale is checked, and every spice is
+              ground fresh, not stockpiled.
+            </p>
+            <p>
+              We later added home delivery and bulk ordering, because getting proper foodstuff
+              shouldn't mean a whole morning at the market. Today we supply households, caterers and
+              small shops across Kaduna State — wholesale, retail and home delivery — and ship raw
+              foodstuff to families and businesses across Nigeria who want the real taste of home.
+            </p>
+            <div class="about-stats">
+              <div class="stat"><b>15+</b><span>varieties in stock</span></div>
+              <div class="stat"><b>36</b><span>states we ship to</span></div>
+              <div class="stat"><b>100%</b><span>hand-sorted produce</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TESTIMONIALS ============ -->
+      <section id="testimonials">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">From our customers</p>
+            <h2>What people say after their first order</h2>
+          </div>
+        </div>
+        <div class="testimonials-track">
+          <div class="testimonials-scroll">
+            <div class="quote-card">
+              <p>
+                "I ordered millet and dry pepper for my shop and it arrived cleaner than what I
+                usually get at the local market. Measure was exact too."
+              </p>
+              <div class="quote-by">Hauwa B.</div>
+              <div class="quote-loc">Kaduna Metro</div>
+            </div>
+            <div class="quote-card">
+              <p>
+                "Living in Lagos, it's hard to find proper guinea corn and crayfish like back home.
+                This is the first delivery that actually tasted right."
+              </p>
+              <div class="quote-by">Emeka O.</div>
+              <div class="quote-loc">Lagos</div>
+            </div>
+            <div class="quote-card">
+              <p>
+                "I run a small canteen and now order beans and groundnut in bulk every two weeks.
+                WhatsApp ordering makes restocking so quick."
+              </p>
+              <div class="quote-by">Ruth I.</div>
+              <div class="quote-loc">Zaria</div>
+            </div>
+            <!-- duplicated for a seamless right-to-left loop -->
+            <div class="quote-card" aria-hidden="true">
+              <p>
+                "I ordered millet and dry pepper for my shop and it arrived cleaner than what I
+                usually get at the local market. Measure was exact too."
+              </p>
+              <div class="quote-by">Hauwa B.</div>
+              <div class="quote-loc">Kaduna Metro</div>
+            </div>
+            <div class="quote-card" aria-hidden="true">
+              <p>
+                "Living in Lagos, it's hard to find proper guinea corn and crayfish like back home.
+                This is the first delivery that actually tasted right."
+              </p>
+              <div class="quote-by">Emeka O.</div>
+              <div class="quote-loc">Lagos</div>
+            </div>
+            <div class="quote-card" aria-hidden="true">
+              <p>
+                "I run a small canteen and now order beans and groundnut in bulk every two weeks.
+                WhatsApp ordering makes restocking so quick."
+              </p>
+              <div class="quote-by">Ruth I.</div>
+              <div class="quote-loc">Zaria</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CTA BANNER ============ -->
+      <section>
+        <div class="cta-banner wrap">
+          <h2>Ready to fill your kitchen?</h2>
+          <p>
+            Build your basket from today's market board, or just message us directly — either way,
+            we'll sort you out.
+          </p>
+          <div class="hero-ctas">
+            <a href="#market" class="btn btn-primary">Go to Market Board</a>
+            <a
+              href="https://wa.me/2348131327023"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline"
+              style="border-color: #fff; color: #fff"
+              >Message on WhatsApp</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="contact">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="brand-name"
+              >HenryTomz <span style="color: var(--russet)">Foodstuff Hub</span></span
+            >
+            <p>
+              Grains, legumes, spices and raw foodstuff from Kaduna's markets — wholesale, retail
+              and home delivery, with honest measure.
+            </p>
+            <div class="social-row">
+              <a
+                href="https://instagram.com/HenryTomz"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram: HenryTomz"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" /></svg
+              ></a>
+              <a
+                href="https://facebook.com/HenryTomz"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook: HenryTomz"
+                ><svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M14 9h3V6h-3a3 3 0 00-3 3v3H8v3h3v6h3v-6h3l1-3h-4V9a1 1 0 011-1z" /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Talk to us</h4>
+            <a href="https://wa.me/2348131327023" target="_blank" rel="noopener"
+              >WhatsApp: 0813 132 7023</a
+            >
+            <a href="tel:+2348131327023">Call: 0813 132 7023</a>
+            <a href="tel:+2348134310263">Call: 0813 431 0263</a>
+            <a href="mailto:orders@henrytomz.ng">orders@henrytomz.ng</a>
+          </div>
+          <div class="footer-col">
+            <h4>Find us</h4>
+            <p>Gonin Gora,<br />Kaduna, Kaduna State, Nigeria</p>
+            <p>Open Mon–Sat, 7am–6pm</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 HenryTomz Foodstuff Hub. All rights reserved. Powered by SankzyTech.</span>
+          <span>Built with honest measure, in Kaduna.</span>
+        </div>
+      </div>
+    </footer>
+
+    <button class="mobile-basket-btn" id="mobileBasketBtn">
+      🧺 Basket · <span id="mobileBasketCount">0</span>
     </button>
-    <nav class="nav-links" id="navLinks">
-      <a href="#market">Market Board</a>
-      <a href="#how">How It Works</a>
-      <a href="#delivery">Delivery</a>
-      <a href="#about">Our Story</a>
-      <a href="#contact">Contact</a>
-      <a href="#market" class="nav-cta" style="display:inline-block;">Order Now</a>
-    </nav>
-  </div>
-</header>
 
-<main id="top">
-
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="eyebrow">Gonin Gora · Kaduna, Nigeria</p>
-        <h1>Every grain, <em>measured right,</em><br>every single time.</h1>
-        <p class="lede">We source millet, guinea corn, beans, rice, spices and raw foodstuff straight from Kaduna's markets — sorted, cleaned, and freshly milled to order. Wholesale, retail and home delivery. Delivered across Kaduna State, shipped anywhere in Nigeria.</p>
-        <div class="hero-ctas">
-          <a href="#market" class="btn btn-primary">
-            Browse Today's Stock
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://wa.me/2348131327023?text=Hello%20HenryTomz%20Foodstuff%20Hub%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener" class="btn btn-outline">
-            Chat on WhatsApp
-          </a>
-        </div>
-      </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="orbit-spin">
-          <div class="swatch-orbit s1"></div>
-          <div class="swatch-orbit s2"></div>
-          <div class="swatch-orbit s3"></div>
-          <div class="swatch-orbit s4"></div>
-          <div class="swatch-orbit s5"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="trust-strip">
-    <div class="wrap">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16l-6.5 4.5 2-7L2 9h7z"/></svg>
-        Sourced weekly from Kaduna's markets
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Cleaned &amp; sorted before packing
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 018 0v2" stroke-linecap="round"/></svg>
-        Sold by mudu, derica &amp; kg — retail or bulk
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
-        Kaduna-wide &amp; nationwide delivery
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ MARKET BOARD ============ -->
-  <section id="market">
-    <div class="market">
-      <div class="market-inner">
-        <div class="section-head">
-          <p class="eyebrow">Updated every market day</p>
-          <h2>Today's Market Board</h2>
-          <p>Tap the items you want, set your quantity, then send your order straight to us on WhatsApp. Prices shown are per unit — final total is confirmed before we pack.</p>
-        </div>
-
-        <div class="board-layout">
-          <div class="board-grid" id="boardGrid"><!-- injected by JS --></div>
-
-          <aside class="basket-panel">
-            <div class="basket-head">
-              <h3>Your Order</h3>
-              <button class="clear-btn" id="clearBasketBtn" type="button" hidden>Clear</button>
-            </div>
-            <p class="basket-sub">Nothing leaves the market until you confirm on WhatsApp.</p>
-            <div class="basket-list" id="basketList">
-              <p class="basket-empty">Your basket is empty — tap "Add" on any item.</p>
-            </div>
-            <div class="basket-total">
-              <span>Estimated total</span>
-              <span id="basketTotal">₦0</span>
-            </div>
-            <button class="wa-btn" id="waButton" disabled>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3c1.5.8 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm5.7 14.3c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.5.3.6.9 2.1 1 2.3.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.5.5-.2.2-.4.4-.2.8.2.4 1 1.6 2.1 2.6 1.4 1.3 2.6 1.7 3 1.9.3.2.5.1.7-.1.2-.2.9-1 1.1-1.4.2-.3.4-.3.7-.2.3.1 1.8.9 2.1 1 .3.2.5.2.6.4.1.2.1.9-.1 1.5z"/></svg>
-              Send Order via WhatsApp
-            </button>
-            <p class="basket-note">Prices may vary slightly by market day — we'll confirm before packing. Thank you for your patronage.</p>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ HOW IT WORKS ============ -->
-  <section id="how">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Three steps, no stress</p>
-        <h2>From market board to your door</h2>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <span class="num">01</span>
-          <h3>Fill your basket</h3>
-          <p>Tap through today's board and set quantities in mudu, derica or kg — mix grains, legumes and spices in one order.</p>
-        </div>
-        <div class="step">
-          <span class="num">02</span>
-          <h3>Confirm on WhatsApp</h3>
-          <p>Your order list is sent straight to our line. We confirm final price, stock and your delivery address in minutes.</p>
-        </div>
-        <div class="step">
-          <span class="num">03</span>
-          <h3>We pack &amp; move it</h3>
-          <p>Pickup at Gonin Gora, same-day delivery around Kaduna, or nationwide courier for orders outside the state.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ DELIVERY ============ -->
-  <section id="delivery" class="delivery">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Coverage</p>
-        <h2>Kaduna first. Nigeria too.</h2>
-      </div>
-      <div class="delivery-grid">
-        <div class="delivery-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-            Within Kaduna State
-          </h3>
-          <p>Same-day and next-day delivery on retail orders — riders move daily around the metro and nearby towns.</p>
-          <div class="tag-list">
-            <span class="tag">Gonin Gora</span>
-            <span class="tag">Kaduna Metro</span>
-            <span class="tag">Sabon Gari</span>
-            <span class="tag">Zaria</span>
-            <span class="tag">Kafanchan</span>
-            <span class="tag">Kagoro</span>
-            <span class="tag">Pambeguwa</span>
-          </div>
-        </div>
-        <div class="delivery-card">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="15" height="10" rx="1.5"/><path d="M16 10h3l3 3v4h-6z"/><circle cx="6" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>
-            Anywhere in Nigeria
-          </h3>
-          <p>Bulk and wholesale orders travel by trusted logistics partners to Lagos, Abuja, Port Harcourt and beyond — ideal for caterers, shops and family stock-ups. 2–5 working days, tracked.</p>
-          <div class="tag-list">
-            <span class="tag">Bulk sacks</span>
-            <span class="tag">Diaspora orders</span>
-            <span class="tag">Caterers &amp; shops</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ABOUT ============ -->
-  <section id="about">
-    <div class="wrap about-grid">
-      <div class="about-visual">
-        <!-- Gallery of shop/product photos, all 13 supplied images, with a repeating watermark overlay. -->
-        <div class="about-gallery" id="aboutGallery">
-          <img src="images/gallery/millet-varieties.webp" alt="Millet varieties at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/guinea-corn.webp" alt="Guinea corn at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/maize.webp" alt="Maize at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/maize-grits.webp" alt="Maize & grits at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/local-rice.webp" alt="Local rice at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/brown-beans.webp" alt="Brown beans at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/groundnut.webp" alt="Groundnut at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/soybean.webp" alt="Soybean at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/dried-pepper.webp" alt="Dried pepper at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/crayfish.webp" alt="Crayfish at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/melon-seed.webp" alt="Melon seed at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/dried-ginger.webp" alt="Dried ginger at HenryTomz Foodstuff Hub" loading="lazy">
-          <img src="images/gallery/yam-tubers.webp" alt="Yam tubers at HenryTomz Foodstuff Hub" loading="lazy">
-        </div>
-        <div class="about-watermark" aria-hidden="true">
-          <span class="wm-line">HenryTomz Foodstuff Hub</span>
-          <span class="wm-line">HenryTomz Foodstuff Hub</span>
-          <span class="wm-line">HenryTomz Foodstuff Hub</span>
-          <span class="wm-line">HenryTomz Foodstuff Hub</span>
-          <span class="wm-line">HenryTomz Foodstuff Hub</span>
-        </div>
-      </div>
-      <div class="about-copy">
-        <p class="eyebrow">Our Story</p>
-        <h2>One stop for your kitchen and your wallet.</h2>
-        <p>HenryTomz Foodstuff Hub started in Gonin Gora, Kaduna — weighing out millet and beans by the mudu for neighbours who wanted honest measure and clean produce. That's still the standard: every bag is sorted by hand, every scale is checked, and every spice is ground fresh, not stockpiled.</p>
-        <p>We later added home delivery and bulk ordering, because getting proper foodstuff shouldn't mean a whole morning at the market. Today we supply households, caterers and small shops across Kaduna State — wholesale, retail and home delivery — and ship raw foodstuff to families and businesses across Nigeria who want the real taste of home.</p>
-        <div class="about-stats">
-          <div class="stat"><b>15+</b><span>varieties in stock</span></div>
-          <div class="stat"><b>36</b><span>states we ship to</span></div>
-          <div class="stat"><b>100%</b><span>hand-sorted produce</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TESTIMONIALS ============ -->
-  <section id="testimonials">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">From our customers</p>
-        <h2>What people say after their first order</h2>
-      </div>
-    </div>
-    <div class="testimonials-track">
-      <div class="testimonials-scroll">
-        <div class="quote-card">
-          <p>"I ordered millet and dry pepper for my shop and it arrived cleaner than what I usually get at the local market. Measure was exact too."</p>
-          <div class="quote-by">Hauwa B.</div>
-          <div class="quote-loc">Kaduna Metro</div>
-        </div>
-        <div class="quote-card">
-          <p>"Living in Lagos, it's hard to find proper guinea corn and crayfish like back home. This is the first delivery that actually tasted right."</p>
-          <div class="quote-by">Emeka O.</div>
-          <div class="quote-loc">Lagos</div>
-        </div>
-        <div class="quote-card">
-          <p>"I run a small canteen and now order beans and groundnut in bulk every two weeks. WhatsApp ordering makes restocking so quick."</p>
-          <div class="quote-by">Ruth I.</div>
-          <div class="quote-loc">Zaria</div>
-        </div>
-        <!-- duplicated for a seamless right-to-left loop -->
-        <div class="quote-card" aria-hidden="true">
-          <p>"I ordered millet and dry pepper for my shop and it arrived cleaner than what I usually get at the local market. Measure was exact too."</p>
-          <div class="quote-by">Hauwa B.</div>
-          <div class="quote-loc">Kaduna Metro</div>
-        </div>
-        <div class="quote-card" aria-hidden="true">
-          <p>"Living in Lagos, it's hard to find proper guinea corn and crayfish like back home. This is the first delivery that actually tasted right."</p>
-          <div class="quote-by">Emeka O.</div>
-          <div class="quote-loc">Lagos</div>
-        </div>
-        <div class="quote-card" aria-hidden="true">
-          <p>"I run a small canteen and now order beans and groundnut in bulk every two weeks. WhatsApp ordering makes restocking so quick."</p>
-          <div class="quote-by">Ruth I.</div>
-          <div class="quote-loc">Zaria</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA BANNER ============ -->
-  <section>
-    <div class="cta-banner wrap">
-      <h2>Ready to fill your kitchen?</h2>
-      <p>Build your basket from today's market board, or just message us directly — either way, we'll sort you out.</p>
-      <div class="hero-ctas">
-        <a href="#market" class="btn btn-primary">Go to Market Board</a>
-        <a href="https://wa.me/2348131327023" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:#fff; color:#fff;">Message on WhatsApp</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer id="contact">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="brand-name">HenryTomz <span style="color:var(--russet)">Foodstuff Hub</span></span>
-        <p>Grains, legumes, spices and raw foodstuff from Kaduna's markets — wholesale, retail and home delivery, with honest measure.</p>
-        <div class="social-row">
-          <a href="https://instagram.com/HenryTomz" target="_blank" rel="noopener" aria-label="Instagram: HenryTomz"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-          <a href="https://facebook.com/HenryTomz" target="_blank" rel="noopener" aria-label="Facebook: HenryTomz"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9h3V6h-3a3 3 0 00-3 3v3H8v3h3v6h3v-6h3l1-3h-4V9a1 1 0 011-1z"/></svg></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Talk to us</h4>
-        <a href="https://wa.me/2348131327023" target="_blank" rel="noopener">WhatsApp: 0813 132 7023</a>
-        <a href="tel:+2348131327023">Call: 0813 132 7023</a>
-        <a href="tel:+2348134310263">Call: 0813 431 0263</a>
-        <a href="mailto:orders@henrytomz.ng">orders@henrytomz.ng</a>
-      </div>
-      <div class="footer-col">
-        <h4>Find us</h4>
-        <p>Gonin Gora,<br>Kaduna, Kaduna State, Nigeria</p>
-        <p>Open Mon–Sat, 7am–6pm</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 HenryTomz Foodstuff Hub. All rights reserved. Powered by SankzyTech.</span>
-      <span>Built with honest measure, in Kaduna.</span>
-    </div>
-  </div>
-</footer>
-
-<button class="mobile-basket-btn" id="mobileBasketBtn">🧺 Basket · <span id="mobileBasketCount">0</span></button>
-
-<script src="app.js" defer></script>
-
-</body>
+    <script src="app.js" defer></script>
+  </body>
 </html>

@@ -41,7 +41,8 @@
 
 // Paste your published Google Sheet CSV link here (see step 5 above).
 // Leave as '' to skip live pricing and just use the PRODUCTS prices below.
-const LIVE_PRICE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQFYu32yEykKdIlHMy7vZ6gtLqfXhKcbFG9ZsmDorNtf4t2GriSY8q5tfUJbRpiOl8uuZxVZG6rB-rP/pub?output=csv';
+const LIVE_PRICE_SHEET_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQFYu32yEykKdIlHMy7vZ6gtLqfXhKcbFG9ZsmDorNtf4t2GriSY8q5tfUJbRpiOl8uuZxVZG6rB-rP/pub?output=csv';
 
 // How often (in minutes) to re-check the sheet for anyone who leaves the
 // page open in a browser tab. Doesn't affect fresh page loads, which
@@ -49,18 +50,126 @@ const LIVE_PRICE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ
 const LIVE_PRICE_REFRESH_MINUTES = 5;
 
 const PRODUCTS = [
-  { id:'millet',   local:'Gero',        name:'Millet',        unit:'mudu', price:1200, c1:'#E9C468', c2:'#B9821E', img:'images/products/millet.webp' },
-  { id:'sorghum',  local:'Dawa',        name:'Guinea Corn',   unit:'mudu', price:1100, c1:'#C25A32', c2:'#7A2E14', img:'images/products/sorghum.webp' },
-  { id:'maize',    local:'Masara',      name:'Maize',         unit:'mudu', price:1000, c1:'#F1CE7A', c2:'#C99A2E', img:'images/products/maize.webp' },
-  { id:'rice',     local:'Shinkafa',    name:'Local Rice',    unit:'derica', price:1500, c1:'#F7F1E1', c2:'#D8CBA0', img:'images/products/rice.webp' },
-  { id:'beans',    local:'Wake',        name:'Brown Beans',   unit:'mudu', price:1800, c1:'#7A2C3E', c2:'#4A1520', img:'images/products/beans.webp' },
-  { id:'groundnut',local:'Gyada',       name:'Groundnut',     unit:'derica', price:1600, c1:'#E8CB94', c2:'#9C6B34', img:'images/products/groundnut.webp' },
-  { id:'soybean',  local:'Waken Soya',  name:'Soybean',       unit:'mudu', price:1300, c1:'#E4DBB0', c2:'#B7A768', img:'images/products/soybean.webp' },
-  { id:'pepper',   local:'Barkono',     name:'Dried Pepper',  unit:'kg',   price:3500, c1:'#D0522F', c2:'#8C2A16', img:'images/products/pepper.webp' },
-  { id:'crayfish', local:'Kifi',        name:'Crayfish',      unit:'kg',   price:6500, c1:'#D69C7C', c2:'#9C5C3A', img:'images/products/crayfish.webp' },
-  { id:'egusi',    local:'Gushi',       name:'Melon Seed',    unit:'derica', price:2200, c1:'#EDE3A6', c2:'#C6B563', img:'images/products/egusi.webp' },
-  { id:'ginger',   local:'Citta',       name:'Dried Ginger',  unit:'kg',   price:4200, c1:'#E0C88E', c2:'#A9803F', img:'images/products/ginger.webp' },
-  { id:'yam',      local:'Doya',        name:'Yam Tuber',     unit:'each', price:1200, c1:'#F3EFE0', c2:'#D6CBA8', img:'images/products/yam.webp' },
+  {
+    id: 'millet',
+    local: 'Gero',
+    name: 'Millet',
+    unit: 'mudu',
+    price: 1200,
+    c1: '#E9C468',
+    c2: '#B9821E',
+    img: 'images/products/millet.webp',
+  },
+  {
+    id: 'sorghum',
+    local: 'Dawa',
+    name: 'Guinea Corn',
+    unit: 'mudu',
+    price: 1100,
+    c1: '#C25A32',
+    c2: '#7A2E14',
+    img: 'images/products/sorghum.webp',
+  },
+  {
+    id: 'maize',
+    local: 'Masara',
+    name: 'Maize',
+    unit: 'mudu',
+    price: 1000,
+    c1: '#F1CE7A',
+    c2: '#C99A2E',
+    img: 'images/products/maize.webp',
+  },
+  {
+    id: 'rice',
+    local: 'Shinkafa',
+    name: 'Local Rice',
+    unit: 'derica',
+    price: 1500,
+    c1: '#F7F1E1',
+    c2: '#D8CBA0',
+    img: 'images/products/rice.webp',
+  },
+  {
+    id: 'beans',
+    local: 'Wake',
+    name: 'Brown Beans',
+    unit: 'mudu',
+    price: 1800,
+    c1: '#7A2C3E',
+    c2: '#4A1520',
+    img: 'images/products/beans.webp',
+  },
+  {
+    id: 'groundnut',
+    local: 'Gyada',
+    name: 'Groundnut',
+    unit: 'derica',
+    price: 1600,
+    c1: '#E8CB94',
+    c2: '#9C6B34',
+    img: 'images/products/groundnut.webp',
+  },
+  {
+    id: 'soybean',
+    local: 'Waken Soya',
+    name: 'Soybean',
+    unit: 'mudu',
+    price: 1300,
+    c1: '#E4DBB0',
+    c2: '#B7A768',
+    img: 'images/products/soybean.webp',
+  },
+  {
+    id: 'pepper',
+    local: 'Barkono',
+    name: 'Dried Pepper',
+    unit: 'kg',
+    price: 3500,
+    c1: '#D0522F',
+    c2: '#8C2A16',
+    img: 'images/products/pepper.webp',
+  },
+  {
+    id: 'crayfish',
+    local: 'Kifi',
+    name: 'Crayfish',
+    unit: 'kg',
+    price: 6500,
+    c1: '#D69C7C',
+    c2: '#9C5C3A',
+    img: 'images/products/crayfish.webp',
+  },
+  {
+    id: 'egusi',
+    local: 'Gushi',
+    name: 'Melon Seed',
+    unit: 'derica',
+    price: 2200,
+    c1: '#EDE3A6',
+    c2: '#C6B563',
+    img: 'images/products/egusi.webp',
+  },
+  {
+    id: 'ginger',
+    local: 'Citta',
+    name: 'Dried Ginger',
+    unit: 'kg',
+    price: 4200,
+    c1: '#E0C88E',
+    c2: '#A9803F',
+    img: 'images/products/ginger.webp',
+  },
+  {
+    id: 'yam',
+    local: 'Doya',
+    name: 'Yam Tuber',
+    unit: 'each',
+    price: 1200,
+    c1: '#F3EFE0',
+    c2: '#D6CBA8',
+    img: 'images/products/yam.webp',
+  },
 ];
 
 const basket = {}; // id -> qty
@@ -77,12 +186,12 @@ const basket = {}; // id -> qty
 // instead of the raw image). This rewrites any such link into the
 // lh3.googleusercontent.com form, which hotlinks reliably. Non-Drive URLs
 // (e.g. Imgur, your own CDN) are returned unchanged.
-function normalizeImageUrl(url){
+function normalizeImageUrl(url) {
   if (!url) return url;
   let id = null;
   let m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
   if (m) id = m[1];
-  if (!id){
+  if (!id) {
     m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (m) id = m[1];
   }
@@ -90,7 +199,7 @@ function normalizeImageUrl(url){
   return url;
 }
 
-function parsePriceCSV(text){
+function parsePriceCSV(text) {
   // More flexible CSV parser: reads header row and supports additional
   // columns (id, price, local, name, unit, c1, c2, img). Returns an
   // object keyed by id with parsed fields. Falls back to empty object
@@ -99,16 +208,16 @@ function parsePriceCSV(text){
   if (lines.length < 2) return {};
 
   // Parse header and map columns to keys
-  const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const header = lines[0].split(',').map((h) => h.trim().toLowerCase());
   const colIndex = (key) => header.indexOf(key);
   const idCol = colIndex('id');
   const priceCol = colIndex('price');
   if (idCol === -1 || priceCol === -1) return {};
 
   const updates = {};
-  for (let i = 1; i < lines.length; i++){
+  for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
-    const cols = lines[i].split(',').map(c => c.trim());
+    const cols = lines[i].split(',').map((c) => c.trim());
     const id = (cols[idCol] || '').toLowerCase();
     if (!id) continue;
     const priceRaw = (cols[priceCol] || '').replace(/[^\d.]/g, '');
@@ -125,18 +234,18 @@ function parsePriceCSV(text){
     const imgCol = colIndex('img');
 
     if (localCol !== -1) entry.local = cols[localCol] || undefined;
-    if (nameCol !== -1)  entry.name  = cols[nameCol]  || undefined;
-    if (unitCol !== -1)  entry.unit  = cols[unitCol]  || undefined;
-    if (c1Col !== -1)    entry.c1    = cols[c1Col]    || undefined;
-    if (c2Col !== -1)    entry.c2    = cols[c2Col]    || undefined;
-    if (imgCol !== -1)   entry.img   = normalizeImageUrl(cols[imgCol]) || undefined;
+    if (nameCol !== -1) entry.name = cols[nameCol] || undefined;
+    if (unitCol !== -1) entry.unit = cols[unitCol] || undefined;
+    if (c1Col !== -1) entry.c1 = cols[c1Col] || undefined;
+    if (c2Col !== -1) entry.c2 = cols[c2Col] || undefined;
+    if (imgCol !== -1) entry.img = normalizeImageUrl(cols[imgCol]) || undefined;
 
     updates[id] = entry;
   }
   return updates;
 }
 
-async function syncLivePrices(){
+async function syncLivePrices() {
   if (!LIVE_PRICE_SHEET_URL) return; // not configured — use fallback prices
   try {
     const res = await fetch(LIVE_PRICE_SHEET_URL, { cache: 'no-store' });
@@ -148,35 +257,41 @@ async function syncLivePrices(){
     let changed = false;
     // Apply updates: update existing products or create new ones when
     // the sheet includes an id not found in PRODUCTS.
-    for (const [id, data] of Object.entries(updates)){
+    for (const [id, data] of Object.entries(updates)) {
       console.debug('processing sheet row id=', id, 'data=', data);
-      const p = PRODUCTS.find(x => x.id === id);
-      if (p){
-        if (data.hasOwnProperty('price') && data.price !== p.price){ p.price = data.price; changed = true; }
-        ['local','name','unit','c1','c2','img'].forEach(k => {
-          if (data[k] && data[k] !== p[k]){ p[k] = data[k]; changed = true; }
+      const p = PRODUCTS.find((x) => x.id === id);
+      if (p) {
+        if (data.hasOwnProperty('price') && data.price !== p.price) {
+          p.price = data.price;
+          changed = true;
+        }
+        ['local', 'name', 'unit', 'c1', 'c2', 'img'].forEach((k) => {
+          if (data[k] && data[k] !== p[k]) {
+            p[k] = data[k];
+            changed = true;
+          }
         });
       } else {
         console.info('Adding new product from sheet:', id, data);
         // create a minimal product entry from available sheet columns
         const newP = {
           id: id,
-          local: (data.local || id),
-          name: (data.name || id.charAt(0).toUpperCase() + id.slice(1)),
-          unit: (data.unit || 'mudu'),
-          price: (data.price || 0),
-          c1: (data.c1 || '#E9C468'),
-          c2: (data.c2 || '#B9821E'),
-          img: (data.img || '')
+          local: data.local || id,
+          name: data.name || id.charAt(0).toUpperCase() + id.slice(1),
+          unit: data.unit || 'mudu',
+          price: data.price || 0,
+          c1: data.c1 || '#E9C468',
+          c2: data.c2 || '#B9821E',
+          img: data.img || '',
         };
         PRODUCTS.push(newP);
         changed = true;
       }
     }
 
-    if (changed){
-      renderBoard();      // redraw prices and any newly added products
-      renderBasket();     // redraw basket total in case prices changed
+    if (changed) {
+      renderBoard(); // redraw prices and any newly added products
+      renderBasket(); // redraw basket total in case prices changed
     }
   } catch (err) {
     // Sheet unreachable or misconfigured — quietly keep using whatever
@@ -185,16 +300,20 @@ async function syncLivePrices(){
   }
 }
 
-function money(n){ return '₦' + n.toLocaleString('en-NG'); }
+function money(n) {
+  return '₦' + n.toLocaleString('en-NG');
+}
 
-function renderBoard(){
+function renderBoard() {
   const grid = document.getElementById('boardGrid');
-  grid.innerHTML = PRODUCTS.map(p => `
+  grid.innerHTML = PRODUCTS.map(
+    (p) => `
     <div class="card" data-id="${p.id}">
       <div class="card-media">
-        ${p.img
-          ? `<img src="${p.img}" alt="${p.name} (${p.local})" loading="lazy">`
-          : `<div class="swatch-fill" style="background:radial-gradient(circle at 32% 28%, ${p.c1}, ${p.c2} 75%);"></div>`
+        ${
+          p.img
+            ? `<img src="${p.img}" alt="${p.name} (${p.local})" loading="lazy">`
+            : `<div class="swatch-fill" style="background:radial-gradient(circle at 32% 28%, ${p.c1}, ${p.c2} 75%);"></div>`
         }
       </div>
       <div class="card-body">
@@ -218,46 +337,47 @@ function renderBoard(){
         </div>
       </div>
     </div>
-  `).join('');
+  `,
+  ).join('');
 }
 
-function changeQty(id, delta){
+function changeQty(id, delta) {
   const el = document.getElementById(`qty-${id}`);
   let val = parseInt(el.textContent, 10) || 0;
   val = Math.max(0, val + delta);
   el.textContent = val;
 }
 
-function addToBasket(id){
+function addToBasket(id) {
   const el = document.getElementById(`qty-${id}`);
   const qty = parseInt(el.textContent, 10) || 0;
-  if(qty <= 0) return;
+  if (qty <= 0) return;
   basket[id] = qty;
   renderBasket();
 }
 
-function clearBasket(){
-  Object.keys(basket).forEach(id => delete basket[id]);
-  PRODUCTS.forEach(p => {
+function clearBasket() {
+  Object.keys(basket).forEach((id) => delete basket[id]);
+  PRODUCTS.forEach((p) => {
     const el = document.getElementById(`qty-${p.id}`);
-    if(el) el.textContent = '0';
+    if (el) el.textContent = '0';
   });
   renderBasket();
 }
 document.getElementById('clearBasketBtn').addEventListener('click', clearBasket);
 
-function renderBasket(){
+function renderBasket() {
   const list = document.getElementById('basketList');
   const totalEl = document.getElementById('basketTotal');
   const waBtn = document.getElementById('waButton');
   const mobileCount = document.getElementById('mobileBasketCount');
   const clearBtn = document.getElementById('clearBasketBtn');
 
-  const entries = Object.entries(basket).filter(([,qty]) => qty > 0);
-  mobileCount.textContent = entries.reduce((s,[,q]) => s+q, 0);
+  const entries = Object.entries(basket).filter(([, qty]) => qty > 0);
+  mobileCount.textContent = entries.reduce((s, [, q]) => s + q, 0);
   clearBtn.hidden = entries.length === 0;
 
-  if(entries.length === 0){
+  if (entries.length === 0) {
     list.innerHTML = '<p class="basket-empty">Your basket is empty — tap "Add" on any item.</p>';
     totalEl.textContent = money(0);
     waBtn.disabled = true;
@@ -265,11 +385,12 @@ function renderBasket(){
   }
 
   let total = 0;
-  list.innerHTML = entries.map(([id, qty]) => {
-    const p = PRODUCTS.find(x => x.id === id);
-    const lineTotal = p.price * qty;
-    total += lineTotal;
-    return `
+  list.innerHTML = entries
+    .map(([id, qty]) => {
+      const p = PRODUCTS.find((x) => x.id === id);
+      const lineTotal = p.price * qty;
+      total += lineTotal;
+      return `
       <div class="basket-row">
         <div>
           <div class="b-name">${p.name}</div>
@@ -278,19 +399,20 @@ function renderBasket(){
         <div class="b-meta">${money(lineTotal)}</div>
       </div>
     `;
-  }).join('');
+    })
+    .join('');
 
   totalEl.textContent = money(total);
   waBtn.disabled = false;
 }
 
-function buildWhatsAppLink(){
-  const entries = Object.entries(basket).filter(([,qty]) => qty > 0);
-  if(entries.length === 0) return null;
+function buildWhatsAppLink() {
+  const entries = Object.entries(basket).filter(([, qty]) => qty > 0);
+  if (entries.length === 0) return null;
   let lines = ["Hello HenryTomz Foodstuff Hub, I'd like to order:"];
   let total = 0;
   entries.forEach(([id, qty]) => {
-    const p = PRODUCTS.find(x => x.id === id);
+    const p = PRODUCTS.find((x) => x.id === id);
     total += p.price * qty;
     lines.push(`- ${p.name} (${p.local}): ${qty} ${p.unit}`);
   });
@@ -302,18 +424,18 @@ function buildWhatsAppLink(){
 
 document.getElementById('boardGrid').addEventListener('click', (e) => {
   const btn = e.target.closest('button');
-  if(!btn) return;
+  if (!btn) return;
   const card = e.target.closest('.card');
   const id = card.dataset.id;
   const action = btn.dataset.action;
-  if(action === 'inc') changeQty(id, 1);
-  if(action === 'dec') changeQty(id, -1);
-  if(action === 'add') addToBasket(id);
+  if (action === 'inc') changeQty(id, 1);
+  if (action === 'dec') changeQty(id, -1);
+  if (action === 'add') addToBasket(id);
 });
 
 document.getElementById('waButton').addEventListener('click', () => {
   const link = buildWhatsAppLink();
-  if(link) window.open(link, '_blank');
+  if (link) window.open(link, '_blank');
 });
 
 document.getElementById('mobileBasketBtn').addEventListener('click', () => {
@@ -326,7 +448,7 @@ document.getElementById('menuToggle').addEventListener('click', () => {
   document.getElementById('menuToggle').setAttribute('aria-expanded', open);
 });
 
-document.querySelectorAll('#navLinks a').forEach(a => {
+document.querySelectorAll('#navLinks a').forEach((a) => {
   a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
 });
 
@@ -337,13 +459,13 @@ renderBasket();
 // re-checking every LIVE_PRICE_REFRESH_MINUTES for anyone who leaves
 // the page open. No-op if LIVE_PRICE_SHEET_URL hasn't been set above.
 syncLivePrices();
-if (LIVE_PRICE_SHEET_URL){
+if (LIVE_PRICE_SHEET_URL) {
   setInterval(syncLivePrices, LIVE_PRICE_REFRESH_MINUTES * 60 * 1000);
 }
 
 /* About section photo slideshow: crossfades through all supplied shop/product photos.
    Pauses on hover, and skips auto-advance entirely for reduced-motion users. */
-(function initAboutGallery(){
+(function initAboutGallery() {
   const gallery = document.getElementById('aboutGallery');
   if (!gallery) return;
   const slides = Array.from(gallery.querySelectorAll('img'));
@@ -356,16 +478,16 @@ if (LIVE_PRICE_SHEET_URL){
   let index = 0;
   let timer = null;
 
-  function nextSlide(){
+  function nextSlide() {
     slides[index].classList.remove('active');
     index = (index + 1) % slides.length;
     slides[index].classList.add('active');
   }
 
-  function start(){
+  function start() {
     if (!timer) timer = setInterval(nextSlide, 3200);
   }
-  function stop(){
+  function stop() {
     clearInterval(timer);
     timer = null;
   }
