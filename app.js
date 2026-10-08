@@ -1,8 +1,8 @@
 /* =====================================================================
    HOW TO CUSTOMISE THIS SITE (read this before publishing)
-   1. WhatsApp number: currently set to 2348131327023 (0813 132 7023).
-      Search for that number if you ever need to change it — it appears
-      in 4 places (hero, CTA banner, footer, and the order script below).
+   1. WhatsApp number: change WHATSAPP_NUMBER just below. Every wa.me link on
+      the page (marked data-wa in index.html) and the basket order button use
+      it. The two tel: links in the footer are plain HTML; edit them there.
    2. Prices: edit the PRODUCTS array below — update `price` (Naira) and
       `unit` for each item to match your real, current market prices.
       These are the FALLBACK prices, used if live pricing (see #5) isn't
@@ -172,7 +172,11 @@ const PRODUCTS = [
   },
 ];
 
-const basket = {}; // id -> qty
+// Customer WhatsApp number in international format, no + or spaces.
+const WHATSAPP_NUMBER = '2348131327023';
+
+const basket = {}; // id -> quantity that is in the basket
+const pending = {}; // id -> quantity picked on a card but not yet added
 
 /* ---------------------------------------------------------------------
    LIVE PRICE SYNC (Google Sheets)
@@ -181,6 +185,42 @@ const basket = {}; // id -> qty
    already in PRODUCTS above if the sheet URL is blank, unreachable,
    or a row doesn't match — the site always keeps working either way.
    --------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------
+   Safety helpers. Everything that comes from the Google Sheet is untrusted
+   text: it is cleaned when it is read and escaped again when it is drawn.
+   --------------------------------------------------------------------- */
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
+}
+
+function cleanText(value, max = 60) {
+  return String(value ?? '')
+    .replace(/[\u0000-\u001f<>]/g, '')
+    .trim()
+    .slice(0, max);
+}
+
+function cleanColor(value) {
+  return /^#[0-9a-f]{3,8}$/i.test(value || '') ? value : undefined;
+}
+
+function cleanImageUrl(value) {
+  if (!value) return undefined;
+  if (/^images\/[\w./-]+$/.test(value)) return value; // a file in this site
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function cleanId(value) {
+  return /^[a-z0-9_-]{1,30}$/.test(value || '') ? value : undefined;
+}
+
 // Google Drive "uc?export=view&id=..." and "/file/d/<id>/view" links often
 // fail to render in a plain <img> tag (Drive returns an HTML interstitial
 // instead of the raw image). This rewrites any such link into the
@@ -219,7 +259,7 @@ function parsePriceCSV(text) {
     if (!lines[i].trim()) continue;
     const cols = lines[i].split(',').map((c) => c.trim());
     const id = (cols[idCol] || '').toLowerCase();
-    if (!id) continue;
+    if (!cleanId(id)) continue;
     const priceRaw = (cols[priceCol] || '').replace(/[^\d.]/g, '');
     const price = priceRaw === '' ? NaN : parseFloat(priceRaw);
 
@@ -233,12 +273,12 @@ function parsePriceCSV(text) {
     const c2Col = colIndex('c2');
     const imgCol = colIndex('img');
 
-    if (localCol !== -1) entry.local = cols[localCol] || undefined;
-    if (nameCol !== -1) entry.name = cols[nameCol] || undefined;
-    if (unitCol !== -1) entry.unit = cols[unitCol] || undefined;
-    if (c1Col !== -1) entry.c1 = cols[c1Col] || undefined;
-    if (c2Col !== -1) entry.c2 = cols[c2Col] || undefined;
-    if (imgCol !== -1) entry.img = normalizeImageUrl(cols[imgCol]) || undefined;
+    if (localCol !== -1) entry.local = cleanText(cols[localCol]) || undefined;
+    if (nameCol !== -1) entry.name = cleanText(cols[nameCol]) || undefined;
+    if (unitCol !== -1) entry.unit = cleanText(cols[unitCol], 20) || undefined;
+    if (c1Col !== -1) entry.c1 = cleanColor(cols[c1Col]);
+    if (c2Col !== -1) entry.c2 = cleanColor(cols[c2Col]);
+    if (imgCol !== -1) entry.img = cleanImageUrl(normalizeImageUrl(cols[imgCol]));
 
     updates[id] = entry;
   }
@@ -252,16 +292,14 @@ async function syncLivePrices() {
     if (!res.ok) throw new Error('Sheet fetch failed: ' + res.status);
     const csvText = await res.text();
     const updates = parsePriceCSV(csvText);
-    console.info('Live price sync — parsed updates:', updates);
 
     let changed = false;
     // Apply updates: update existing products or create new ones when
     // the sheet includes an id not found in PRODUCTS.
     for (const [id, data] of Object.entries(updates)) {
-      console.debug('processing sheet row id=', id, 'data=', data);
       const p = PRODUCTS.find((x) => x.id === id);
       if (p) {
-        if (data.hasOwnProperty('price') && data.price !== p.price) {
+        if (Object.hasOwn(data, 'price') && data.price !== p.price) {
           p.price = data.price;
           changed = true;
         }
@@ -272,14 +310,16 @@ async function syncLivePrices() {
           }
         });
       } else {
-        console.info('Adding new product from sheet:', id, data);
+        // A product that is not in PRODUCTS needs a valid price, otherwise it
+        // would show as ₦0 on the board.
+        if (!data.price) continue;
         // create a minimal product entry from available sheet columns
         const newP = {
           id: id,
           local: data.local || id,
           name: data.name || id.charAt(0).toUpperCase() + id.slice(1),
           unit: data.unit || 'mudu',
-          price: data.price || 0,
+          price: data.price,
           c1: data.c1 || '#E9C468',
           c2: data.c2 || '#B9821E',
           img: data.img || '',
@@ -308,29 +348,29 @@ function renderBoard() {
   const grid = document.getElementById('boardGrid');
   grid.innerHTML = PRODUCTS.map(
     (p) => `
-    <div class="card" data-id="${p.id}">
+    <div class="card" data-id="${esc(p.id)}">
       <div class="card-media">
         ${
           p.img
-            ? `<img src="${p.img}" alt="${p.name} (${p.local})" loading="lazy">`
-            : `<div class="swatch-fill" style="background:radial-gradient(circle at 32% 28%, ${p.c1}, ${p.c2} 75%);"></div>`
+            ? `<img src="${esc(p.img)}" alt="${esc(p.name)} (${esc(p.local)})" width="380" height="380" loading="lazy">`
+            : `<div class="swatch-fill" style="background:radial-gradient(circle at 32% 28%, ${esc(p.c1)}, ${esc(p.c2)} 75%);"></div>`
         }
       </div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-names">
-            <span class="local-name">${p.local}</span>
-            <span class="eng-name">${p.name}</span>
+            <span class="local-name">${esc(p.local)}</span>
+            <span class="eng-name">${esc(p.name)}</span>
           </div>
         </div>
         <div class="card-meta">
-          <span>per ${p.unit}</span>
+          <span>per ${esc(p.unit)}</span>
           <span class="price">${money(p.price)}</span>
         </div>
         <div class="card-actions">
           <div class="qty-control">
             <button class="qty-btn" data-action="dec" aria-label="Decrease quantity">−</button>
-            <span class="qty-val" id="qty-${p.id}">0</span>
+            <span class="qty-val" id="qty-${esc(p.id)}">${pending[p.id] || 0}</span>
             <button class="qty-btn" data-action="inc" aria-label="Increase quantity">+</button>
           </div>
           <button class="add-btn" data-action="add">Add</button>
@@ -341,27 +381,36 @@ function renderBoard() {
   ).join('');
 }
 
-function changeQty(id, delta) {
+function showQty(id) {
   const el = document.getElementById(`qty-${id}`);
-  let val = parseInt(el.textContent, 10) || 0;
-  val = Math.max(0, val + delta);
-  el.textContent = val;
+  if (el) el.textContent = pending[id] || 0;
+}
+
+// The quantity a customer has picked lives in `pending`, not in the page, so
+// redrawing the board (for example after a price refresh) does not lose it.
+function changeQty(id, delta) {
+  pending[id] = Math.max(0, (pending[id] || 0) + delta);
+  showQty(id);
 }
 
 function addToBasket(id) {
-  const el = document.getElementById(`qty-${id}`);
-  const qty = parseInt(el.textContent, 10) || 0;
-  if (qty <= 0) return;
-  basket[id] = qty;
+  const qty = pending[id] || 0;
+  if (qty > 0) basket[id] = qty;
+  else delete basket[id]; // picking 0 and pressing Add removes the item
+  renderBasket();
+}
+
+function removeFromBasket(id) {
+  delete basket[id];
+  delete pending[id];
+  showQty(id);
   renderBasket();
 }
 
 function clearBasket() {
   Object.keys(basket).forEach((id) => delete basket[id]);
-  PRODUCTS.forEach((p) => {
-    const el = document.getElementById(`qty-${p.id}`);
-    if (el) el.textContent = '0';
-  });
+  Object.keys(pending).forEach((id) => delete pending[id]);
+  PRODUCTS.forEach((p) => showQty(p.id));
   renderBasket();
 }
 document.getElementById('clearBasketBtn').addEventListener('click', clearBasket);
@@ -373,7 +422,9 @@ function renderBasket() {
   const mobileCount = document.getElementById('mobileBasketCount');
   const clearBtn = document.getElementById('clearBasketBtn');
 
-  const entries = Object.entries(basket).filter(([, qty]) => qty > 0);
+  const entries = Object.entries(basket).filter(
+    ([id, qty]) => qty > 0 && PRODUCTS.some((x) => x.id === id),
+  );
   mobileCount.textContent = entries.reduce((s, [, q]) => s + q, 0);
   clearBtn.hidden = entries.length === 0;
 
@@ -393,10 +444,14 @@ function renderBasket() {
       return `
       <div class="basket-row">
         <div>
-          <div class="b-name">${p.name}</div>
-          <div class="b-meta">${qty} × ${p.unit} · ${money(p.price)}</div>
+          <div class="b-name">${esc(p.name)}</div>
+          <div class="b-meta">${qty} × ${esc(p.unit)} · ${money(p.price)}</div>
         </div>
-        <div class="b-meta">${money(lineTotal)}</div>
+        <div class="b-line">
+          <span class="b-meta">${money(lineTotal)}</span>
+          <button class="b-remove" type="button" data-remove="${esc(id)}"
+            aria-label="Remove ${esc(p.name)} from basket">×</button>
+        </div>
       </div>
     `;
     })
@@ -407,7 +462,9 @@ function renderBasket() {
 }
 
 function buildWhatsAppLink() {
-  const entries = Object.entries(basket).filter(([, qty]) => qty > 0);
+  const entries = Object.entries(basket).filter(
+    ([id, qty]) => qty > 0 && PRODUCTS.some((x) => x.id === id),
+  );
   if (entries.length === 0) return null;
   let lines = ["Hello HenryTomz Foodstuff Hub, I'd like to order:"];
   let total = 0;
@@ -419,7 +476,7 @@ function buildWhatsAppLink() {
   lines.push(`Estimated total: ${money(total)}`);
   lines.push('Please confirm price, availability and delivery.');
   const text = encodeURIComponent(lines.join('\n'));
-  return `https://wa.me/2348131327023?text=${text}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 }
 
 document.getElementById('boardGrid').addEventListener('click', (e) => {
@@ -433,9 +490,21 @@ document.getElementById('boardGrid').addEventListener('click', (e) => {
   if (action === 'add') addToBasket(id);
 });
 
+document.getElementById('basketList').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-remove]');
+  if (btn) removeFromBasket(btn.dataset.remove);
+});
+
 document.getElementById('waButton').addEventListener('click', () => {
   const link = buildWhatsAppLink();
-  if (link) window.open(link, '_blank');
+  if (link) window.open(link, '_blank', 'noopener');
+});
+
+// Keep every wa.me link on the page in sync with WHATSAPP_NUMBER.
+document.querySelectorAll('a[data-wa]').forEach((a) => {
+  const url = new URL(a.href);
+  url.pathname = `/${WHATSAPP_NUMBER}`;
+  a.href = url.toString();
 });
 
 document.getElementById('mobileBasketBtn').addEventListener('click', () => {

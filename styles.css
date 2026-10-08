@@ -1148,3 +1148,23 @@ footer {
     display: flex;
   }
 }
+.b-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.b-remove {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+.b-remove:hover {
+  color: var(--russet-dark);
+  border-color: var(--russet-dark);
+}
