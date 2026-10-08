@@ -1187,3 +1187,9 @@ footer {
 .skip-link:focus {
   transform: translateY(0);
 }
+/* The generic `.nav-links a` padding was overriding the button padding on desktop. */
+@media (min-width: 861px) {
+  .nav-links a.nav-cta {
+    padding: 10px 20px;
+  }
+}
