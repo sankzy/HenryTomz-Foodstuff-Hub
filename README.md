@@ -22,7 +22,7 @@ The page includes:
 - Responsive navigation with mobile menu support
 - Hero section with direct WhatsApp contact
 - Market board with product cards, quantity controls, and estimated prices
-- In-memory basket with total calculation and a remove button on every line
+- Basket with total calculation and a remove button on every line. It is saved on the customer's phone for 7 days, so a refresh does not empty it
 - WhatsApp order message generation
 - Delivery coverage for Kaduna and nationwide bulk shipping
 - About section with an automatic product and shop photo gallery
@@ -160,7 +160,7 @@ Before publishing a change:
 
 - Open the page on desktop and mobile widths.
 - Confirm that all product cards render and prices are readable.
-- Add several products, verify quantities and the estimated total, remove one item, then clear the basket.
+- Add several products, verify quantities and the estimated total, refresh the page and confirm the basket is still there, remove one item, then clear the basket.
 - Paste the site link into a WhatsApp chat and confirm the preview image and title appear.
 - Confirm that the WhatsApp button is disabled when the basket is empty.
 - Place a test order and verify the recipient number and generated message.
@@ -172,7 +172,7 @@ Before publishing a change:
 
 ## Known Limitations
 
-- Basket contents are stored only in memory and disappear on refresh or browser close.
+- The basket is saved only in the customer's own browser (`localStorage`, quantities only, 7 days). It does not follow them to another phone, and it is lost if they clear site data or use a private window.
 - There is no customer address form, payment flow, stock validation, delivery-fee calculation, order history, analytics, or order-status tracking.
 - The frontend does not create a server-side order record.
 - The live-price parser supports simple comma-separated rows and does not support quoted CSV fields containing commas.

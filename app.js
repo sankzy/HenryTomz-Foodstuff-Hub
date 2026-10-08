@@ -179,6 +179,44 @@ const basket = {}; // id -> quantity that is in the basket
 const pending = {}; // id -> quantity picked on a card but not yet added
 
 /* ---------------------------------------------------------------------
+   Remember the basket on the customer's phone (localStorage), so a refresh
+   or an accidental close does not empty it. Only quantities are saved, never
+   prices, so prices always come from the live sheet. Saved baskets expire
+   after 7 days. If storage is blocked, everything still works without it.
+   --------------------------------------------------------------------- */
+const BASKET_STORAGE_KEY = 'henrytomz-basket-v1';
+const BASKET_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+const MAX_QTY = 999;
+
+function saveBasket() {
+  try {
+    localStorage.setItem(
+      BASKET_STORAGE_KEY,
+      JSON.stringify({ savedAt: Date.now(), basket, pending }),
+    );
+  } catch {
+    // Storage blocked or full: the basket just will not survive a refresh.
+  }
+}
+
+function loadBasket() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(BASKET_STORAGE_KEY));
+    if (!saved || !(Date.now() - saved.savedAt < BASKET_MAX_AGE_MS)) return;
+    [
+      [basket, saved.basket],
+      [pending, saved.pending],
+    ].forEach(([target, source]) => {
+      Object.entries(source || {}).forEach(([id, qty]) => {
+        if (cleanId(id) && Number.isInteger(qty) && qty > 0 && qty <= MAX_QTY) target[id] = qty;
+      });
+    });
+  } catch {
+    // Nothing saved, or unreadable: start with an empty basket.
+  }
+}
+
+/* ---------------------------------------------------------------------
    LIVE PRICE SYNC (Google Sheets)
    Fetches the published CSV, matches rows to PRODUCTS by `id`, and
    overwrites `price` in-memory. Falls back silently to the prices
@@ -389,8 +427,9 @@ function showQty(id) {
 // The quantity a customer has picked lives in `pending`, not in the page, so
 // redrawing the board (for example after a price refresh) does not lose it.
 function changeQty(id, delta) {
-  pending[id] = Math.max(0, (pending[id] || 0) + delta);
+  pending[id] = Math.min(MAX_QTY, Math.max(0, (pending[id] || 0) + delta));
   showQty(id);
+  saveBasket();
 }
 
 function addToBasket(id) {
@@ -398,6 +437,7 @@ function addToBasket(id) {
   if (qty > 0) basket[id] = qty;
   else delete basket[id]; // picking 0 and pressing Add removes the item
   renderBasket();
+  saveBasket();
 }
 
 function removeFromBasket(id) {
@@ -405,6 +445,7 @@ function removeFromBasket(id) {
   delete pending[id];
   showQty(id);
   renderBasket();
+  saveBasket();
 }
 
 function clearBasket() {
@@ -412,6 +453,7 @@ function clearBasket() {
   Object.keys(pending).forEach((id) => delete pending[id]);
   PRODUCTS.forEach((p) => showQty(p.id));
   renderBasket();
+  saveBasket();
 }
 document.getElementById('clearBasketBtn').addEventListener('click', clearBasket);
 
@@ -521,6 +563,7 @@ document.querySelectorAll('#navLinks a').forEach((a) => {
   a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
 });
 
+loadBasket();
 renderBoard();
 renderBasket();
 
