@@ -2,6 +2,22 @@
 
 A lightweight, single-page storefront for HenryTomz Foodstuff Hub in Gonin Gora, Kaduna. The page presents grains, legumes, spices, and other raw foodstuff, lets customers build a basket, and sends the order request to WhatsApp for confirmation.
 
+**Live site:** https://henryfoodstuff.vercel.app/
+
+![Home page on desktop](docs/screenshot-home.png)
+
+![Market board with three items in the basket](docs/screenshot-market.png)
+
+<img src="docs/screenshot-mobile.png" alt="Home page on a phone" width="260" />
+
+## Built With
+
+- HTML5, CSS and vanilla JavaScript (no framework or build step)
+- Google Sheets, published as CSV, for live prices
+- WhatsApp (`wa.me` links) for orders
+- Prettier for formatting
+- Deployed on Vercel
+
 ## At A Glance
 
 - **Application type:** Static HTML storefront
@@ -54,7 +70,7 @@ Open [`index.html`](index.html) in a browser. The page will render locally, alth
 A local server provides the most reliable development environment:
 
 ```bash
-cd /path/to/Grains
+cd HenryTomz-Foodstuff-Hub
 python3 -m http.server 8000
 ```
 
@@ -65,7 +81,7 @@ Stop the server with `Ctrl+C`.
 ## Project Structure
 
 ```text
-Grains/
+HenryTomz-Foodstuff-Hub/
 ├── index.html              # Page markup, meta tags and structured data
 ├── styles.css              # All styles
 ├── app.js                  # Products, live prices, basket and WhatsApp order link
